@@ -1,6 +1,8 @@
 package sahraei.hamidreza.woltpromax.feature.venuelist.data.local
 
-class CoordinatesLocalDataSource {
+import javax.inject.Inject
+
+class CoordinatesLocalDataSource @Inject constructor() {
 
     val coordinatesList = listOf<Pair<Double, Double>>(
 
