@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import sahraei.hamidreza.woltpromax.ui.theme.Typography
 
 @Composable
 fun VenueListScreen() {
@@ -68,12 +69,14 @@ fun CardItem(
             ) {
                 Text(
                     text = title,
+                    style = Typography.body1,
                     color = MaterialTheme.colors.onSurface
                 )
                 Spacer(modifier = Modifier.size(8.dp))
                 if (!description.isNullOrEmpty()) {
                     Text(
                         text = description,
+                        style = Typography.subtitle1,
                         color = MaterialTheme.colors.onBackground
                     )
                 }

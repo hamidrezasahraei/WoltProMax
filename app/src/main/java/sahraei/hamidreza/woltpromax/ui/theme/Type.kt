@@ -6,23 +6,51 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
+
 val Typography = Typography(
     body1 = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
-    )
-    /* Other default text styles to override
-    button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
-        fontSize = 14.sp
+        fontSize = 16.sp,
+        color = LightGreys90
+    ),
+    body2 = TextStyle(
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        color = LightGreys10
+    ),
+    h1 = TextStyle(
+        color = LightGreys90,
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Medium,
+        fontSize = 24.sp
+    ),
+    h2 = TextStyle(
+        color = LightGreys90,
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Medium,
+        fontSize = 22.sp
+    ),
+    subtitle1 = TextStyle(
+        color = LightGreys90,
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        letterSpacing = 0.15.sp
+    ),
+    subtitle2 = TextStyle(
+        color = LightGreys90,
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+        letterSpacing = 0.15.sp
     ),
     caption = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        color = LightGreys90,
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+        letterSpacing = 0.15.sp
     )
-    */
 )
