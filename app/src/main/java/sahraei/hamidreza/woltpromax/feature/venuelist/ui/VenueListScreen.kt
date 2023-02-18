@@ -17,6 +17,10 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import sahraei.hamidreza.woltpromax.common.widget.AnimatedLikeButton
 import sahraei.hamidreza.woltpromax.common.widget.WoltProMaxProgressItem
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueItem
 import sahraei.hamidreza.woltpromax.feature.venuelist.viewmodel.VenueListViewModel
@@ -105,6 +110,7 @@ fun CardItem(
             Column(
                 modifier = Modifier
                     .padding(start = 8.dp)
+                    .weight(1.0f)
             ) {
                 Text(
                     text = title,
@@ -119,6 +125,16 @@ fun CardItem(
                         color = MaterialTheme.colors.onBackground
                     )
                 }
+            }
+
+            var checked by remember {
+                mutableStateOf(false)
+            }
+
+            AnimatedLikeButton(
+                isChecked = checked
+            ) {
+                checked = !checked
             }
         }
     }
