@@ -2,6 +2,7 @@ package sahraei.hamidreza.woltpromax.feature.venuelist.data
 
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.local.CoordinatesLocalDataSource
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueDto
+import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueItem
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueListDto
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueListRemoteDataSource
 import javax.inject.Inject
@@ -15,7 +16,7 @@ class VenuesRepository @Inject constructor(
         return coordinatesLocalDataSource.coordinatesList
     }
 
-    suspend fun getVenueListByCoordinates(lat: Double, lon: Double): List<VenueDto> {
+    suspend fun getVenueListByCoordinates(lat: Double, lon: Double): List<VenueItem> {
         return venueListRemoteDataSource.getVenueListByCoordinates(lat, lon)
     }
 }

@@ -12,13 +12,13 @@ data class SectionDto(
 
 data class ItemDto(
     @SerializedName("venue") val venue: VenueDto? = null,
-)
+    @SerializedName("image") val image: ImageDto?,
+    )
 
 data class VenueDto(
     @SerializedName("id") val id: String,
     @SerializedName("name") val name: String,
-    @SerializedName("short_description") val shortDescription: String?,
-    @SerializedName("image") val image: ImageDto?,
+    @SerializedName("short_description") val shortDescription: String?
 )
 
 data class ImageDto(

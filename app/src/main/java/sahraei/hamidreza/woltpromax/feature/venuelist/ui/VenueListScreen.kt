@@ -1,13 +1,17 @@
 package sahraei.hamidreza.woltpromax.feature.venuelist.ui
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -21,6 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import sahraei.hamidreza.woltpromax.common.widget.WoltProMaxProgressItem
+import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueItem
 import sahraei.hamidreza.woltpromax.feature.venuelist.viewmodel.VenueListViewModel
 import sahraei.hamidreza.woltpromax.ui.theme.Typography
 
@@ -28,9 +34,37 @@ import sahraei.hamidreza.woltpromax.ui.theme.Typography
 fun VenueListScreen(
     venueListViewModel: VenueListViewModel = hiltViewModel()
 ) {
-    LazyColumn {
-        items(10) {
-            CardItem(title = "TestTitle") {
+    val state = venueListViewModel.state
+    when {
+        state.isLoading -> {
+            WoltProMaxProgressItem()
+        }
+        state.venues != null -> {
+            VenuesListSection(state.venues)
+        }
+    }
+
+}
+
+@Composable
+fun VenuesListSection(
+    venues: List<VenueItem>
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(
+            items = venues,
+            key = { it.hashCode() }
+        ) {
+            CardItem(
+                title = it.name,
+                description = it.shortDescription,
+                imageUrl = it.image
+            ) {
 
             }
         }
