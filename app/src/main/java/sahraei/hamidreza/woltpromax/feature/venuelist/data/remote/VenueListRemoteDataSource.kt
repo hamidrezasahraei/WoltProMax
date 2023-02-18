@@ -37,5 +37,6 @@ data class VenueItem(
     val id: String,
     val name: String,
     val shortDescription: String?,
-    val image: String?
+    val image: String?,
+    var isLiked: Boolean = false
 )

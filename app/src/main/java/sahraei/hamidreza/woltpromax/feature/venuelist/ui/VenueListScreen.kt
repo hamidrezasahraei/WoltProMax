@@ -1,6 +1,5 @@
 package sahraei.hamidreza.woltpromax.feature.venuelist.ui
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,10 +16,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,7 +40,9 @@ fun VenueListScreen(
             WoltProMaxProgressItem()
         }
         state.venues != null -> {
-            VenuesListSection(state.venues)
+            VenuesListSection(state.venues) { id ->
+                venueListViewModel.onLikedClicked(id)
+            }
         }
     }
 
@@ -53,7 +50,8 @@ fun VenueListScreen(
 
 @Composable
 fun VenuesListSection(
-    venues: List<VenueItem>
+    venues: List<VenueItem>,
+    onLikedClicked: (String) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -63,14 +61,15 @@ fun VenuesListSection(
     ) {
         items(
             items = venues,
-            key = { it.hashCode() }
-        ) {
+            key = { it.id }
+        ) { item ->
             CardItem(
-                title = it.name,
-                description = it.shortDescription,
-                imageUrl = it.image
+                title = item.name,
+                description = item.shortDescription,
+                imageUrl = item.image,
+                isLiked = item.isLiked
             ) {
-
+                onLikedClicked.invoke(item.id)
             }
         }
     }
@@ -82,14 +81,12 @@ fun CardItem(
     title: String,
     description: String? = null,
     imageUrl: String? = null,
+    isLiked: Boolean = false,
     onLikeClicked: () -> Unit
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .clickable {
-                onLikeClicked.invoke()
-            },
+            .fillMaxWidth(),
         elevation = 8.dp
     ) {
         Row(
@@ -127,14 +124,10 @@ fun CardItem(
                 }
             }
 
-            var checked by remember {
-                mutableStateOf(false)
-            }
-
             AnimatedLikeButton(
-                isChecked = checked
+                isChecked = isLiked
             ) {
-                checked = !checked
+                onLikeClicked.invoke()
             }
         }
     }

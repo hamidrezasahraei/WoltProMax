@@ -1,6 +1,7 @@
 package sahraei.hamidreza.woltpromax.feature.venuelist.viewmodel
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -19,17 +20,32 @@ class VenueListViewModel @Inject constructor(
     var state by mutableStateOf(VenueListScreenState())
         private set
 
+    private val venueList = mutableStateListOf<VenueItem>()
+
     init {
         getVenueList()
     }
 
     private fun getVenueList() {
         viewModelScope.launch {
-            val venues = venuesRepository.getVenueListByCoordinates(10.0,10.0)
+            venueList.addAll(venuesRepository.getVenueListByCoordinates(10.0, 10.0))
             state = state.copy(
                 isLoading = false,
-                venues = venues
+                venues = venueList
             )
+        }
+    }
+
+    fun onLikedClicked(id: String) {
+        viewModelScope.launch {
+            val isLikedBefore = venuesRepository.isVenueLiked(id)
+            if (isLikedBefore) {
+                venuesRepository.unlikeVenue(id)
+            } else {
+                venuesRepository.likeVenue(id)
+            }
+            val index = venueList.indexOfFirst { it.id == id }
+            venueList[index] = venueList[index].copy(isLiked = !isLikedBefore)
         }
     }
 }

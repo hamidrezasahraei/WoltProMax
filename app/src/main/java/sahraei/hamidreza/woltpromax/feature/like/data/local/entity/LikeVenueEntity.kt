@@ -1,4 +1,4 @@
-package sahraei.hamidreza.woltpromax.feature.like.data.local
+package sahraei.hamidreza.woltpromax.feature.like.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
