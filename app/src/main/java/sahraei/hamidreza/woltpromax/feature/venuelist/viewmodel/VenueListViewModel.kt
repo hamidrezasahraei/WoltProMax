@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.VenuesRepository
-import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueDto
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueItem
 import javax.inject.Inject
 
