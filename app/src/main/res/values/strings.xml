@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WoltProMax</string>
+    <string name="location_changed_snackbar">Your location changed, Updating the list...</string>
+    <string name="ok">OK</string>
 </resources>

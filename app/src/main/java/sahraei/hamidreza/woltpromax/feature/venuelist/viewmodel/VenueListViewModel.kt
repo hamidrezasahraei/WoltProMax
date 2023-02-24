@@ -37,6 +37,7 @@ class VenueListViewModel @Inject constructor(
             venueList.addAll(venues)
             state = state.copy(
                 isLoading = false,
+                locationChanged = false,
                 venues = venueList
             )
         }
@@ -58,11 +59,15 @@ class VenueListViewModel @Inject constructor(
     }
 
     fun onLocationChanged() {
+        state = state.copy(
+            locationChanged = true
+        )
         getVenueList()
     }
 }
 
 data class VenueListScreenState(
     val isLoading: Boolean = true,
+    val locationChanged: Boolean = false,
     val venues: List<VenueItem>? = null
 )

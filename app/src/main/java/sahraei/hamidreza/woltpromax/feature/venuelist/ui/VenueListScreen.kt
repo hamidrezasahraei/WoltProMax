@@ -15,18 +15,26 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import sahraei.hamidreza.woltpromax.R
 import sahraei.hamidreza.woltpromax.common.widget.AnimatedLikeButton
 import sahraei.hamidreza.woltpromax.common.widget.WoltProMaxProgressItem
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueItem
@@ -45,13 +53,29 @@ fun VenueListScreen(
     RepeatTaskComposable(TTL) {
         venueListViewModel.onLocationChanged()
     }
-    when {
-        state.isLoading -> {
-            WoltProMaxProgressItem()
-        }
-        state.venues != null -> {
-            VenuesListSection(state.venues) { id ->
-                venueListViewModel.onLikedClicked(id)
+    val scaffoldState: ScaffoldState = rememberScaffoldState()
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    Scaffold(scaffoldState = scaffoldState) {
+        when {
+            state.isLoading -> {
+                WoltProMaxProgressItem()
+            }
+            state.venues != null -> {
+                if (state.locationChanged) {
+                    val loadingSnackbarText = stringResource(R.string.location_changed_snackbar)
+                    val loadingSnackbarAction = stringResource(R.string.ok)
+                    coroutineScope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            message = loadingSnackbarText,
+                            actionLabel = loadingSnackbarAction
+                        )
+                    }
+                } else {
+                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                }
+                VenuesListSection(state.venues) { id ->
+                    venueListViewModel.onLikedClicked(id)
+                }
             }
         }
     }
