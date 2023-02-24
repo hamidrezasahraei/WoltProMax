@@ -27,8 +27,14 @@ class VenueListViewModel @Inject constructor(
     }
 
     private fun getVenueList() {
+        val currentLocation = venuesRepository.getCurrentLocation()
         viewModelScope.launch {
-            venueList.addAll(venuesRepository.getVenueListByCoordinates(10.0, 10.0))
+            val venues = venuesRepository.getVenueListByCoordinates(
+                lat = currentLocation.first,
+                lon = currentLocation.second
+            )
+            venueList.clear()
+            venueList.addAll(venues)
             state = state.copy(
                 isLoading = false,
                 venues = venueList
@@ -36,6 +42,8 @@ class VenueListViewModel @Inject constructor(
         }
     }
 
+    // Some logics in this method could move to domain layer for re-usability if
+    // we want domain layer
     fun onLikedClicked(id: String) {
         viewModelScope.launch {
             val isLikedBefore = venuesRepository.isVenueLiked(id)
@@ -47,6 +55,10 @@ class VenueListViewModel @Inject constructor(
             val index = venueList.indexOfFirst { it.id == id }
             venueList[index] = venueList[index].copy(isLiked = !isLikedBefore)
         }
+    }
+
+    fun onLocationChanged() {
+        getVenueList()
     }
 }
 

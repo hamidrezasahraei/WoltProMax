@@ -16,8 +16,8 @@ class VenuesRepository @Inject constructor(
     private val venueListRemoteDataSource: VenueListRemoteDataSource
 ) {
 
-    fun getCoordinates(): List<Pair<Double, Double>> {
-        return coordinatesLocalDataSource.coordinatesList
+    fun getCurrentLocation(): Pair<Double, Double> {
+        return coordinatesLocalDataSource.currentLocation()
     }
 
     suspend fun isVenueLiked(id: String): Boolean {

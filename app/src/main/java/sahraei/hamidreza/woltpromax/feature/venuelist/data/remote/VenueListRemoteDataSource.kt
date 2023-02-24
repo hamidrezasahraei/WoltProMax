@@ -8,7 +8,7 @@ class VenueListRemoteDataSource @Inject constructor(
     private val venueListService: VenueListService
 ) {
     suspend fun getVenueListByCoordinates(lat: Double, lon: Double): List<VenueItem> {
-        val section = venueListService.getVenueList().sections.first {
+        val section = venueListService.getVenueList(lat, lon).sections.first {
             it.items.any { item ->
                 item.venue != null
             }

@@ -16,6 +16,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,17 +25,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import kotlinx.coroutines.delay
 import sahraei.hamidreza.woltpromax.common.widget.AnimatedLikeButton
 import sahraei.hamidreza.woltpromax.common.widget.WoltProMaxProgressItem
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueItem
 import sahraei.hamidreza.woltpromax.feature.venuelist.viewmodel.VenueListViewModel
 import sahraei.hamidreza.woltpromax.ui.theme.Typography
+import java.util.concurrent.TimeUnit
+
+private val TTL = TimeUnit.SECONDS.toMillis(10)
 
 @Composable
 fun VenueListScreen(
     venueListViewModel: VenueListViewModel = hiltViewModel()
 ) {
     val state = venueListViewModel.state
+
+    RepeatTaskComposable(TTL) {
+        venueListViewModel.onLocationChanged()
+    }
     when {
         state.isLoading -> {
             WoltProMaxProgressItem()
@@ -129,6 +138,16 @@ fun CardItem(
             ) {
                 onLikeClicked.invoke()
             }
+        }
+    }
+}
+
+@Composable
+fun RepeatTaskComposable(periodTime: Long, task: () -> Unit) {
+    LaunchedEffect(Unit) {
+        while(true) {
+            task.invoke()
+            delay(periodTime)
         }
     }
 }
