@@ -1,5 +1,6 @@
 package sahraei.hamidreza.woltpromax.feature.venuelist.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -57,6 +58,7 @@ fun VenueListScreen(
 
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun VenuesListSection(
     venues: List<VenueItem>,
@@ -73,6 +75,7 @@ fun VenuesListSection(
             key = { it.id }
         ) { item ->
             CardItem(
+                modifier = Modifier.animateItemPlacement(),
                 title = item.name,
                 description = item.shortDescription,
                 imageUrl = item.image,
