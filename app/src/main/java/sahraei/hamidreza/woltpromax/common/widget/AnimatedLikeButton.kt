@@ -19,14 +19,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+
+const val LikeButtonTag = "LikeButton"
 
 @Composable
 fun AnimatedLikeButton(
+    modifier: Modifier = Modifier,
     isChecked: Boolean,
     onClick: () -> Unit
 ) {
     IconToggleButton(
+        modifier = modifier.testTag(LikeButtonTag),
         checked = isChecked,
         onCheckedChange = { onClick() }
     ) {

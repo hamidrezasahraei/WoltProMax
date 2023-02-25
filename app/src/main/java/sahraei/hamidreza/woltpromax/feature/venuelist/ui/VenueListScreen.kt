@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,6 +46,8 @@ import sahraei.hamidreza.woltpromax.ui.theme.Typography
 import java.util.concurrent.TimeUnit
 
 private val TTL = TimeUnit.SECONDS.toMillis(10)
+const val VenueItemTestTag = "VenueItem"
+const val SnackbarTestTag = "snackbar"
 
 @Composable
 fun VenueListScreen(
@@ -63,6 +66,8 @@ fun VenueListScreen(
         snackbarHost = {
             SnackbarHost(it) { data ->
                 Snackbar(
+                    modifier = Modifier
+                        .testTag(SnackbarTestTag),
                     contentColor = MaterialTheme.colors.primary,
                     snackbarData = data
                 )
@@ -135,7 +140,9 @@ fun CardItem(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag(VenueItemTestTag)
+        ,
         elevation = 8.dp,
         backgroundColor = MaterialTheme.colors.surface
     ) {
