@@ -14,3 +14,6 @@ val DarkGreys70 = Color(0xFFC0C3D2)
 val DarkGreys40 = Color(0xFF44464E)
 val DarkGreys20 = Color(0xFF1D1F23)
 val DarkGreys10 = Color(0xFF191A1F)
+
+val surfaceDark = Color(0xFF2A2B2F)
+val surfaceLight = Color(0xFFF7F9FD)

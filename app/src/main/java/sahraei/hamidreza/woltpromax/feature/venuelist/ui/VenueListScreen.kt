@@ -17,6 +17,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
+import androidx.compose.material.Snackbar
+import androidx.compose.material.SnackbarHost
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -55,7 +57,18 @@ fun VenueListScreen(
     }
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
-    Scaffold(scaffoldState = scaffoldState) {
+    Scaffold(
+        scaffoldState = scaffoldState,
+        backgroundColor = MaterialTheme.colors.primary,
+        snackbarHost = {
+            SnackbarHost(it) { data ->
+                Snackbar(
+                    contentColor = MaterialTheme.colors.primary,
+                    snackbarData = data
+                )
+            }
+        }
+    ) {
         when {
             state.isLoading -> {
                 WoltProMaxProgressItem()
@@ -123,7 +136,8 @@ fun CardItem(
     Card(
         modifier = modifier
             .fillMaxWidth(),
-        elevation = 8.dp
+        elevation = 8.dp,
+        backgroundColor = MaterialTheme.colors.surface
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -148,7 +162,7 @@ fun CardItem(
                 Text(
                     text = title,
                     style = Typography.body1,
-                    color = MaterialTheme.colors.onSurface
+                    color = MaterialTheme.colors.onBackground
                 )
                 Spacer(modifier = Modifier.size(8.dp))
                 if (!description.isNullOrEmpty()) {

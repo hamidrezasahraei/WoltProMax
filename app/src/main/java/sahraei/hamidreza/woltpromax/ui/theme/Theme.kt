@@ -12,10 +12,10 @@ private val DarkColorPalette = darkColors(
     primaryVariant = DarkGreys40,
     secondary = WoltProMaxBrand,
     background = Color.Transparent,
-    surface = DarkGreys20,
+    surface = surfaceDark,
     onPrimary = DarkGreys90,
     onBackground = DarkGreys70,
-    onSurface = DarkGreys90
+    onSurface = DarkGreys20
 )
 
 private val LightColorPalette = lightColors(
@@ -23,7 +23,7 @@ private val LightColorPalette = lightColors(
     primaryVariant = LightGreys40,
     secondary = WoltProMaxBrand,
     background = Color.Transparent,
-    surface = LightGreys20,
+    surface = surfaceLight,
     onPrimary = LightGreys90,
     onBackground = LightGreys70,
     onSurface = LightGreys90

@@ -11,6 +11,7 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -29,12 +30,12 @@ fun AnimatedLikeButton(
         checked = isChecked,
         onCheckedChange = { onClick() }
     ) {
-        val transition = updateTransition(isChecked, label = "Checked indicator")
+        val transition = updateTransition(isChecked, label = "Like Icon")
 
         val tint by transition.animateColor(
             label = "Tint"
         ) { isChecked ->
-            if (isChecked) Color.Red else Color.Black
+            if (isChecked) Color.Red else MaterialTheme.colors.onBackground
         }
 
         val size by transition.animateDp(
