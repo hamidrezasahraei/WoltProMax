@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
 import sahraei.hamidreza.woltpromax.R
 import sahraei.hamidreza.woltpromax.common.widget.AnimatedLikeButton
 import sahraei.hamidreza.woltpromax.common.widget.WoltProMaxProgressItem
-import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueItem
+import sahraei.hamidreza.woltpromax.feature.venuelist.model.VenueItem
 import sahraei.hamidreza.woltpromax.feature.venuelist.viewmodel.VenueListViewModel
 import sahraei.hamidreza.woltpromax.ui.theme.Typography
 import java.util.concurrent.TimeUnit

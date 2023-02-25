@@ -1,12 +1,8 @@
 package sahraei.hamidreza.woltpromax.feature.venuelist.data
 
-import kotlinx.coroutines.flow.Flow
 import sahraei.hamidreza.woltpromax.feature.like.data.local.LikeVenueLocalDatasource
-import sahraei.hamidreza.woltpromax.feature.like.data.local.entity.LikeVenueEntity
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.local.CoordinatesLocalDataSource
-import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueDto
-import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueItem
-import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueListDto
+import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.ItemDto
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueListRemoteDataSource
 import javax.inject.Inject
 
@@ -32,11 +28,7 @@ class VenuesRepository @Inject constructor(
         likeVenueLocalDatasource.unlikeVenue(id)
     }
 
-    suspend fun getVenueListByCoordinates(lat: Double, lon: Double): List<VenueItem> {
-        val venues = venueListRemoteDataSource.getVenueListByCoordinates(lat, lon)
-        venues.forEach { venue ->
-            venue.isLiked = likeVenueLocalDatasource.isVenueLiked(venue.id)
-        }
-        return venues
+    suspend fun getVenueListByCoordinates(lat: Double, lon: Double): List<ItemDto> {
+        return venueListRemoteDataSource.getVenueListByCoordinates(lat, lon)
     }
 }

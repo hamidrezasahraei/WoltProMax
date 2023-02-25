@@ -9,7 +9,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import sahraei.hamidreza.woltpromax.feature.venuelist.data.VenuesRepository
-import sahraei.hamidreza.woltpromax.feature.venuelist.data.remote.VenueItem
+import sahraei.hamidreza.woltpromax.feature.venuelist.mapper.toVenueItem
+import sahraei.hamidreza.woltpromax.feature.venuelist.model.VenueItem
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,10 +30,18 @@ class VenueListViewModel @Inject constructor(
     private fun getVenueList() {
         val currentLocation = venuesRepository.getCurrentLocation()
         viewModelScope.launch {
-            val venues = venuesRepository.getVenueListByCoordinates(
+            val itemsWithVenue = venuesRepository.getVenueListByCoordinates(
                 lat = currentLocation.first,
                 lon = currentLocation.second
             )
+            val venues = itemsWithVenue.mapNotNull {
+                val isLiked = if (it.venue != null) {
+                    venuesRepository.isVenueLiked(it.venue.id)
+                } else {
+                    false
+                }
+                it.toVenueItem(isLiked)
+            }
             venueList.clear()
             venueList.addAll(venues)
             state = state.copy(
